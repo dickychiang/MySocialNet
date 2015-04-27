@@ -1,0 +1,39 @@
+{
+	"name": "relation",
+	"options": {
+		"mysql": {
+			"table": "Relations"
+		}
+	},
+	"properties": {
+		"elderlyUserId": {
+			"type": "int",
+			"id": 1,
+			"required": true,
+			"mysql": {
+				"columnName":"ElderlyUserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"relatedUserId": {
+			"type": "int",
+			"id": 2,
+			"required": true,
+			"mysql": {
+				"columnName":"RelatedUserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+	},
+	"acls": [],
+	"methods": []
+}

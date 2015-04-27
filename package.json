@@ -1,0 +1,26 @@
+{
+  "name": "comp-sci-7092-api",
+  "version": "0.0.1",
+  "main": "server/server.js",
+  "scripts": {
+    "pretest": "jshint ."
+  },
+  "dependencies": {
+  	"asnyc": "^0.9.0",
+    "compression": "^1.0.3",
+    "errorhandler": "^1.1.1",
+    "express-session": "^1.9.1",
+    "loopback": "^2.5.0",
+    "loopback-boot": "^2.2.0",
+    "loopback-datasource-juggler": "^2.7.0",
+    "loopback-connector-mysql": "^1.4.9",
+    "serve-favicon": "^2.0.1",
+    "socket.io": "^1.2.1"
+  },
+  "optionalDependencies": {
+    "loopback-explorer": "^1.1.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.6"
+  }
+}

@@ -1,0 +1,16 @@
+{
+	"memory": {
+		"name": "memory",
+		"connector": "memory",
+		"file": "memory.json"
+	},
+	"mysql": {
+		"name": "mysql",
+		"connector": "mysql",
+		"host": "mysql-instance.cv9ygyym1otq.ap-southeast-2.rds.amazonaws.com",
+		"port": 3306,
+		"database": "MobileWireless",
+		"username": "mysql_username",
+		"password": "mysql_password"
+	}
+}

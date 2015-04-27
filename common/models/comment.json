@@ -1,0 +1,87 @@
+{
+	"name": "comment",
+	"options": {
+		"mysql": {
+			"table": "Comments"
+		}
+	},
+	"properties": {
+		"id": {
+			"id": true,
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"CommentId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"userId": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"UserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"postId": {
+			"type": "number",
+			"mysql": {
+				"columnName":"postId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"speechId": {
+			"type": "number",
+			"mysql": {
+				"columnName":"speechId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"Y"
+			}
+		},
+		"content": {
+			"type": "string",
+			"mysql": {
+				"columnName":"Content",
+				"dataType":"text",
+				"nullable":"Y"
+			}
+		},
+		"created": {
+			"type": "date",
+			"required": true,
+			"mysql": {
+				"columnName":"CreatedOn",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+		"user": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "userId"
+		},
+		"post": {
+			"type": "belongsTo",
+			"model": "post",
+			"foreignKey": "postId"
+		}
+	},
+	"acls": [],
+	"methods": []
+}

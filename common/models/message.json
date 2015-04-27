@@ -1,0 +1,100 @@
+{
+	"name": "message",
+	"options": {
+		"mysql": {
+			"table": "Messages"
+		}
+	},
+	"properties": {
+		"id": {
+			"id": true,
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"MessageId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"ownerId": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"OwnerId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"fromUserId": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"FromUserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"toUserId": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"ToUserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"speechId": {
+			"type": "number",
+			"mysql": {
+				"columnName":"speechId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"Y"
+			}
+		},
+		"content": {
+			"type": "string",
+			"mysql": {
+				"columnName":"Content",
+				"dataType":"text",
+				"nullable":"Y"
+			}
+		},
+		"created": {
+			"type": "date",
+			"required": true,
+			"mysql": {
+				"columnName":"CreatedOn",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+		"owner": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "ownerId"
+		},
+		"fromUserId": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "fromUserId"
+		}
+	},
+	"hidden": ["ownerId"],
+	"acls": [],
+	"methods": []
+}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html manifest="assets/cache.manifest">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<meta name="apple-mobile-web-app-title" content="Demo" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-title" content="Demo" />
+	<meta name="mobile-web-app-capable" content="yes">
+	<title>Demo</title>
+	<link rel="stylesheet" href="assets/framework7.min.css" />
+	<link rel="stylesheet" href="assets/app.css" />
+	<script type="text/javascript">
+		var api_root = 'http://10.201.15.028:3000';
+	</script>
+</head>
+<body onload="app.start()">
+	<div class="statusbar-overlay"></div>
+	<div class="views">
+		<div id="main-view" class="view">			
+			<div class="pages">
+			
+				<!-- contacts-view-page -->
+				<div class="page navbar-fixed cached" data-page="home-page">
+				</div>
+				<script id="contacts-list-template" type="text/template7">
+					<ul>
+					{{#each contacts}}
+						<li>
+							<a goto="user-page-{{id}}" href="#" class="item-link item-content">
+								<div class="item-media"><i class="icon icon-contact"></i></div>
+								<div class="item-inner">
+									<div class="item-title">{{firstName}} {{lastName}}</div>
+									{{#if online}}
+									<div class="item-after"><span class="badge bg-green">O</span></div>
+									{{/if}}
+								</div>
+							</a>
+						</li>
+					{{/each}}
+					</ul>
+				</script>
+				<script id="home-page-template" type="text/template7">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left"></div>
+							<div class="center">Home</div>
+							<div class="right">
+								<a goto="log-out-button" href="#" class="link">
+									<span>Log out</span>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="toolbar tabbar tabbar-labels">
+						<div class="toolbar-inner">
+							<a href="#tab-contacts" class="tab-link">
+								<i id="tab-icon-contacts" class="icon no-badge icon-info"></i>
+								<span class="tabbar-label">Contacts</span>
+							</a>
+							<a href="#tab-chats" class="tab-link">
+								<i id="tab-icon-chats" class="icon no-badge icon-info"></i>
+								<span class="tabbar-label">Chats</span>
+							</a>
+							<a href="#tab-calls" class="tab-link">
+								<i id="tab-icon-calls" class="icon no-badge icon-info"></i>
+								<span class="tabbar-label">Calls</span>
+							</a>
+						</div>
+					</div>
+					<div class="page-content">
+						<div class="tabs">
+							<div id="tab-contacts" class="tab">
+								<div id="contacts-list" class="list-block">
+								</div>
+							</div>
+							<div id="tab-chats" class="tab">
+								<div id="chats-list" class="list-block">
+								</div>
+							</div>
+							<div id="tab-calls" class="tab">
+								<div id="calls-list" class="list-block">
+								</div>
+							</div>
+						</div>
+					</div>
+				</script>
+				
+				<!-- user-page -->
+				<div class="page navbar-fixed cached" data-page="user-page">
+				</div>
+				<script id="user-page-template" type="text/template7">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a goto="home-page" href="#" class="link back">
+									<i class="icon icon-back"></i>
+									<span>Home</span>
+								</a>
+							</div>
+							<div class="center">{{user.firstName}} {{user.lastName}}</div>
+							<div class="right">
+							</div>
+						</div>
+					</div>
+					<div class="page-content">
+						<div class="list-block">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="icon icon-name"></i></div>
+										<div class="item-inner">
+											<div class="item-title label">Name</div>
+											<div class="item-input">
+												{{user.firstName}} {{user.lastName}}
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="icon icon-email"></i></div>
+										<div class="item-inner">
+											<div class="item-title label">Email</div>
+											<div class="item-input">
+												{{user.email}}
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="icon icon-role"></i></div>
+										<div class="item-inner">
+											<div class="item-title label">Role</div>
+											<div class="item-input">
+												{{user.role}}
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="content-block">
+							<div class="row">
+								<div class="col-40">
+									<a goto="chat-page-{{user.id}}" href="#" class="button button-big button-fill color-green">Text</a>
+								</div>
+								<div class="col-20">
+								</div>
+								<div class="col-40">
+									<a goto="call-page-{{user.id}}" href="#" class="button button-big button-fill color-red">Call</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</script>
+				
+				<!-- chat-page -->
+				<div class="page navbar-fixed cached" data-page="chat-page">
+				</div>
+				<script id="chat-page-template" type="text/template7">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a goto="home-page" href="#" class="link back">
+									<i class="icon icon-back"></i>
+									<span>Back</span>
+								</a>
+							</div>
+							<div class="center">{{user.firstName}} {{user.lastName}}</div>
+							<div class="right">
+							</div>
+						</div>
+					</div>
+										<div class="toolbar messagebar">
+					<div class="toolbar-inner"><a href="#" class="link icon-only"><i class="icon icon-camera"></i></a>
+					<textarea id="message-content" placeholder="Message" class=""></textarea><a id="send-button" href="#" class="link send-message">Send</a>
+					</div>
+					</div>
+					<div class="page-content messages-content">
+    					<div id="messages-list" class="messages">
+    					</div>
+					</div>
+				</script>
+				<script id="messages-list-template" type="text/template7">
+					{{#each messages}}
+						{{#if sent}}
+							<div class="message message-sent">
+								<div class="message-text">{{content}}</div>
+						  	</div>
+						{{else}}
+							<div class="message message-received">
+								<div class="message-text">{{content}}</div>
+						  	</div>
+						{{#if}}
+					{{/each}}
+				</script>
+				
+				<!-- call-page -->
+				<div class="page navbar-fixed cached" data-page="call-page">
+				</div>
+				<script id="call-page-template" type="text/template7">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="left">
+								<a goto="home-page" href="#" class="link back">
+									<i class="icon icon-back"></i>
+									<span>Back</span>
+								</a>
+							</div>
+							<div class="center">{{user.firstName}} {{user.lastName}}</div>
+							<div class="right">
+							</div>
+						</div>
+					</div>
+					<div class="page-content">
+    					<div class="content-block">
+							<div class="row">
+								<video id='remoteVideo' autoplay width="100%" class="remote"></video>
+							</div>
+							<div class="row">
+								<video id='localVideo' autoplay width="100%" class="remote"></video>
+							</div>
+						</div>
+					</div>
+				</script>
+			</div>
+		</div>
+	</div>
+	
+	<!-- login -->
+	<div id="login-screen" class="login-screen">
+	<div class="view">
+		<div class="page">
+			<div class="page-content login-screen-content">
+			<div class="login-screen-title">Demo</div>
+				<div class="list-block">
+					<ul>
+						<li class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+									Username
+								</div>
+								<div class="item-input">
+									<input type="text" id="login-username" name="username" placeholder="Username" autocomplete="off" />
+								</div>
+							</div>
+						</li>
+						<li class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+									Password
+								</div>
+								<div class="item-input">
+									<input type="password" id="login-password" name="password" placeholder="Password" />
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="list-block">
+					<ul>
+						<li>
+						<a id="login-button" href="#" class="item-link list-button">Log In</a>
+						</li>
+					</ul>
+				</div>
+				<div class="content-block">
+					<p id="login-msg" style="text-align: center"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+
+	<!-- Path to Framework7 Library JS-->
+	<script type="text/javascript" src="assets/framework7.min.js"></script>
+	<script type="text/javascript" src="assets/async.js"></script>
+	<script type="text/javascript" src="assets/socket.io.js"></script>
+	<script type="text/javascript" src="assets/nlib.js"></script>
+	<script type="text/javascript" src="assets/inobounce.min.js"></script>
+	<script type="text/javascript" src="assets/app.js"></script>
+	<script type="text/javascript" src="assets/session.js"></script>
+	<script type="text/javascript" src="assets/socket.js"></script>
+	<script type="text/javascript" src="assets/home-page.js"></script>
+	<script type="text/javascript" src="assets/user-page.js"></script>
+	<script type="text/javascript" src="assets/chat-page.js"></script>
+	<script type="text/javascript" src="assets/login-screen.js"></script>
+	 <script src="//api.turnservers.com/api.js?key=Here You API KEY"></script>
+</body>
+</html>

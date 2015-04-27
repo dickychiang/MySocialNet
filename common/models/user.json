@@ -1,0 +1,140 @@
+{
+	"name": "user",
+	"base": "User",
+	"options": {
+		"mysql": {
+			"table": "Users"
+		}
+	},
+	"properties": {
+		"id": {
+			"id": true,
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"UserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"username": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Username",
+				"dataType":"VARCHAR2",
+				"dataLength":32,
+				"nullable":"N"
+			}
+		},
+		"password": {
+			"type": "string",
+			"mysql": {
+				"dataType": "VARCHAR",
+				"dataLength": 60
+			}
+		},
+		"firstName": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"FirstName",
+				"dataType":"VARCHAR2",
+				"dataLength":128,
+				"nullable":"N"
+			}
+		},
+		"lastName": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"LastName",
+				"dataType":"VARCHAR2",
+				"dataLength":64,
+				"nullable":"N"
+			}
+		},
+		"email": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Email",
+				"dataType":"VARCHAR2",
+				"dataLength":512,
+				"nullable":"N"
+			}
+		},
+		"role": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Role",
+				"dataType":"VARCHAR2",
+				"dataLength":16,
+				"nullable":"N"
+			}
+		},
+		"created": {
+			"type": "date",
+			"required": true,
+			"mysql": {
+				"columnName":"CreatedOn",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+		"elder-relation": {
+			"type": "hasMany",
+			"model": "relation",
+			"foreignKey": "elderlyUserId"
+		},
+		"related-relation": {
+			"type": "hasMany",
+			"model": "relation",
+			"foreignKey": "relatedUserId"
+		},
+		"post": {
+			"type": "hasMany",
+			"model": "post",
+			"foreignKey": "userId"
+		},
+		"comment": {
+			"type": "hasMany",
+			"model": "comment",
+			"foreignKey": "userId"
+		},
+		"message": {
+			"type": "hasMany",
+			"model": "message",
+			"foreignKey": "ownerId"
+		}
+	},
+	"acls": [
+		{
+			"principalType": "ROLE",
+			"principalId": "$everyone",
+			"permission": "ALLOW",
+			"property": "session"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$everyone",
+			"permission": "ALLOW",
+			"property": "friends"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$everyone",
+			"permission": "ALLOW",
+			"property": "onlineUserIds"
+		}
+	],
+	"methods": []
+}
