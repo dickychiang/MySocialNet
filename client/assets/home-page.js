@@ -12,10 +12,6 @@
 		p.find('[goto="user-page-' + user.id + '"]').on('click', function() {
 			app.go('user-page', {user: user});
 		});
-		p.find('[goto="log-out-button"]').on('click', function() {
-			app.session.logout();
-			app.framework.loginScreen();
-		});
 	};
 	
 	var load_contacts = function() {
@@ -39,6 +35,10 @@
 	};
 	
 	var on_goto = function(p) {
+		p.find('[goto="log-out-button"]').on('click', function() {
+			app.session.logout();
+			app.framework.loginScreen();
+		});
 		p.find('[id*="' + tab_prefix + '"]').on('show', function() {
 			var id = app.$(this).prop('id');
 			if (id.indexOf(tab_prefix) == 0) {

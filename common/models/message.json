@@ -5,11 +5,11 @@
 			"table": "Messages"
 		}
 	},
+	"idInjection": false,
 	"properties": {
 		"id": {
 			"id": true,
 			"type": "number",
-			"required": true,
 			"mysql": {
 				"columnName":"MessageId",
 				"dataType":"int",
@@ -71,7 +71,6 @@
 		},
 		"created": {
 			"type": "date",
-			"required": true,
 			"mysql": {
 				"columnName":"CreatedOn",
 				"dataType":"datetime",
@@ -95,6 +94,13 @@
 		}
 	},
 	"hidden": ["ownerId"],
-	"acls": [],
+	"acls": [
+		{
+			"principalType": "ROLE",
+			"principalId": "$everyone",
+			"permission": "ALLOW",
+			"property": "add"
+		}
+	],
 	"methods": []
 }

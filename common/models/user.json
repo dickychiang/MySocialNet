@@ -90,12 +90,12 @@
 	},
 	"validations": [],
 	"relations": {
-		"elder-relation": {
+		"elder_relation": {
 			"type": "hasMany",
 			"model": "relation",
 			"foreignKey": "elderlyUserId"
 		},
-		"related-relation": {
+		"related_relation": {
 			"type": "hasMany",
 			"model": "relation",
 			"foreignKey": "relatedUserId"

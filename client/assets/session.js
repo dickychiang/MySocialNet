@@ -78,17 +78,11 @@
 	};
 	api.logout = function() {
 		if (session) {
-			nlib.get(app.api+'/users/logout?access_token=' + session.id, function(status, data) {
+			nlib.get(app.api_path+'/users/logout?access_token=' + session.id, function(status, data) {
 				if (status == 200) {				
 					session = null;
 					users = null;
 					nlib.localStorage.value('session', session);
-					if (callback) callback(null);
-				}
-			
-				// cannot connect to the server
-				else {
-					if (callback) callback(1, 'Unable to connect to server for authentication.');
 				}
 			});
 		
