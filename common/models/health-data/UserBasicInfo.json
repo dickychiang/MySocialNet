@@ -1,0 +1,67 @@
+{
+	"name": "UserBasicInfo",
+	"plural": "UserBasicInfo",
+	"options": {
+		"mysql": {
+			"table": "UserBasicInfo"
+		}
+	},
+	"idInjection": false,
+	"properties": {
+		"UserId": {
+			"id": true,
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"UserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"DateOfBirth": {
+			"type": "date",
+			"required": true,
+			"mysql": {
+				"columnName":"DateOfBirth",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"BiologicalSex": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"BiologicalSex",
+				"dataType":"VARCHAR",
+				"dataLength": 20,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"BloodType": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"BloodType",
+				"dataType":"VARCHAR",
+				"dataLength": 20,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+		"user": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "UserId"
+		}
+	},
+	"acls": [],
+	"methods": []
+}

@@ -89,7 +89,8 @@
 		}
 	},
 	"validations": [],
-	"relations": {
+	"relations": {},
+	"relations-backup": {
 		"elder_relation": {
 			"type": "hasMany",
 			"model": "relation",
@@ -119,19 +120,19 @@
 	"acls": [
 		{
 			"principalType": "ROLE",
-			"principalId": "$everyone",
+			"principalId": "$authenticated",
 			"permission": "ALLOW",
 			"property": "session"
 		},
 		{
 			"principalType": "ROLE",
-			"principalId": "$everyone",
+			"principalId": "$authenticated",
 			"permission": "ALLOW",
 			"property": "friends"
 		},
 		{
 			"principalType": "ROLE",
-			"principalId": "$everyone",
+			"principalId": "$authenticated",
 			"permission": "ALLOW",
 			"property": "onlineUserIds"
 		}

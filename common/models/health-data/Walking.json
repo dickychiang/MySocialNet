@@ -1,24 +1,15 @@
 {
-	"name": "post",
+	"name": "Walking",
+	"plural": "Walking",
 	"options": {
 		"mysql": {
-			"table": "Posts"
+			"table": "Walking"
 		}
 	},
 	"idInjection": false,
 	"properties": {
-		"id": {
+		"UserId": {
 			"id": true,
-			"type": "number",
-			"mysql": {
-				"columnName":"PostId",
-				"dataType":"int",
-				"dataLength": null,
-				"dataScale": 0,
-				"nullable":"N"
-			}
-		},
-		"userId": {
 			"type": "number",
 			"required": true,
 			"mysql": {
@@ -29,28 +20,40 @@
 				"nullable":"N"
 			}
 		},
-		"speechId": {
+		"Distance": {
 			"type": "number",
+			"required": true,
 			"mysql": {
-				"columnName":"speechId",
-				"dataType":"int",
-				"dataLength": null,
+				"columnName":"Distance",
+				"dataType":"double",
 				"dataScale": 0,
-				"nullable":"Y"
+				"nullable":"N"
 			}
 		},
-		"content": {
-			"type": "string",
+		"Steps": {
+			"type": "number",
+			"required": true,
 			"mysql": {
-				"columnName":"Content",
-				"dataType":"text",
-				"nullable":"Y"
+				"columnName":"Steps",
+				"dataType":"int",
+				"dataScale": 0,
+				"nullable":"N"
 			}
 		},
-		"created": {
+		"StartTime": {
 			"type": "date",
 			"mysql": {
-				"columnName":"CreatedOn",
+				"columnName":"StartTime",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"EndTime": {
+			"type": "date",
+			"mysql": {
+				"columnName":"EndTime",
 				"dataType":"datetime",
 				"dataLength": null,
 				"dataScale": 0,
@@ -63,21 +66,10 @@
 		"user": {
 			"type": "belongsTo",
 			"model": "user",
-			"foreignKey": "userId"
-		},
-		"comment": {
-			"type": "hasMany",
-			"model": "comment",
-			"foreignKey": "postId"
+			"foreignKey": "UserId"
 		}
 	},
 	"acls": [
-		{
-			"principalType": "ROLE",
-			"principalId": "$authenticated",
-			"permission": "ALLOW",
-			"property": "add"
-		}
 	],
 	"methods": []
 }

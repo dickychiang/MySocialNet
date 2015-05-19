@@ -1,0 +1,54 @@
+{
+	"name": "BodyTemperature",
+	"plural": "BodyTemperature",
+	"options": {
+		"mysql": {
+			"table": "BodyTemperature"
+		}
+	},
+	"idInjection": false,
+	"properties": {
+		"UserId": {
+			"id": true,
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"UserId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"Value": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"Value",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"RecordTime": {
+			"type": "date",
+			"mysql": {
+				"columnName":"RecordTime",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+		"user": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "UserId"
+		}
+	},
+	"acls": [],
+	"methods": []
+}
