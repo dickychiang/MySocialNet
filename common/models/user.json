@@ -6,11 +6,11 @@
 			"table": "Users"
 		}
 	},
+	"idInjection": false,
 	"properties": {
 		"id": {
 			"id": true,
 			"type": "number",
-			"required": true,
 			"mysql": {
 				"columnName":"UserId",
 				"dataType":"int",
@@ -31,6 +31,7 @@
 		},
 		"password": {
 			"type": "string",
+			"required": true,
 			"mysql": {
 				"dataType": "VARCHAR",
 				"dataLength": 60
@@ -78,7 +79,6 @@
 		},
 		"created": {
 			"type": "date",
-			"required": true,
 			"mysql": {
 				"columnName":"CreatedOn",
 				"dataType":"datetime",
@@ -89,8 +89,7 @@
 		}
 	},
 	"validations": [],
-	"relations": {},
-	"relations-backup": {
+	"relations": {
 		"elder_relation": {
 			"type": "hasMany",
 			"model": "relation",

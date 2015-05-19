@@ -32,6 +32,7 @@ app.use(loopback.favicon());
 app.use(loopback.compress());
 
 boot(app, __dirname);
+app.use('/sample', loopback.static(__dirname + '/../client'))
 app.use(loopback.urlNotFound());
 app.use(loopback.errorHandler());
 

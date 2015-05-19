@@ -33,6 +33,16 @@
 	},
 	"validations": [],
 	"relations": {
+		"elder_relation": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "elderlyUserId"
+		},
+		"related_relation": {
+			"type": "belongsTo",
+			"model": "user",
+			"foreignKey": "relatedUserId"
+		}
 	},
 	"acls": [],
 	"methods": []
