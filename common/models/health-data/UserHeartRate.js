@@ -23,7 +23,7 @@ module.exports = function(model) {
         'current', 
         {
         	accepts: [
-        		{arg: 'id', type: 'int'},
+        		{arg: 'id', type: 'number'},
         		{arg: 'start', type: 'string'},
         		{arg: 'end', type: 'string'}
         	],
@@ -39,7 +39,7 @@ module.exports = function(model) {
         'average', 
         {
         	accepts: [
-        		{arg: 'id', type: 'int'},
+        		{arg: 'id', type: 'number'},
         		{arg: 'start', type: 'string'},
         		{arg: 'end', type: 'string'}
         	],

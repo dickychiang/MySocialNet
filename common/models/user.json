@@ -67,16 +67,6 @@
 				"nullable":"N"
 			}
 		},
-		"role": {
-			"type": "string",
-			"required": true,
-			"mysql": {
-				"columnName":"Role",
-				"dataType":"VARCHAR2",
-				"dataLength":16,
-				"nullable":"N"
-			}
-		},
 		"created": {
 			"type": "date",
 			"mysql": {
@@ -99,6 +89,17 @@
 			"type": "hasMany",
 			"model": "relation",
 			"foreignKey": "relatedUserId"
+		},
+		"serviceProvider": {
+			"type": "hasMany",
+			"model": "serviceProvider",
+			"foreignKey": "userId"
+		},
+		"service": {
+			"type": "hasMany",
+			"model": "service",
+			"foreignKey": "userId",
+			"through": "serviceProvider"
 		},
 		"post": {
 			"type": "hasMany",
@@ -134,6 +135,30 @@
 			"principalId": "$authenticated",
 			"permission": "ALLOW",
 			"property": "onlineUserIds"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "__get__service"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "__findById__service"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "__get__serviceProvider"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "__findById__serviceProvider"
 		}
 	],
 	"methods": []

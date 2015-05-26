@@ -36,7 +36,7 @@ module.exports = function(model) {
         'add', 
         {
         	accepts: [
-        		{arg: 'toUserId', type: 'int'},
+        		{arg: 'toUserId', type: 'number'},
         		{arg: 'content', type: 'string'}
         	],
         	returns: {arg: 'message', type: 'object'},

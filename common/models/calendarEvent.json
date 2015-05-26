@@ -1,18 +1,17 @@
 {
-	"name": "comment",
+	"name": "calendarEvent",
 	"options": {
 		"mysql": {
-			"table": "Comments"
+			"table": "CalendarEvent"
 		}
 	},
-	"idInjection": false,
 	"properties": {
 		"id": {
-			"id": true,
 			"type": "number",
+			"id": true,
 			"required": true,
 			"mysql": {
-				"columnName":"CommentId",
+				"columnName":"CalendarEventId",
 				"dataType":"int",
 				"dataLength": null,
 				"dataScale": 0,
@@ -30,42 +29,44 @@
 				"nullable":"N"
 			}
 		},
-		"postId": {
-			"type": "number",
+		"time": {
+			"type": "date",
+			"required": true,
 			"mysql": {
-				"columnName":"postId",
+				"columnName":"Time",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"duration": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"Duration",
 				"dataType":"int",
 				"dataLength": null,
 				"dataScale": 0,
 				"nullable":"N"
 			}
 		},
-		"speechId": {
-			"type": "number",
-			"mysql": {
-				"columnName":"speechId",
-				"dataType":"int",
-				"dataLength": null,
-				"dataScale": 0,
-				"nullable":"Y"
-			}
-		},
-		"content": {
+		"title": {
 			"type": "string",
-			"mysql": {
-				"columnName":"Content",
-				"dataType":"text",
-				"nullable":"Y"
-			}
-		},
-		"created": {
-			"type": "date",
 			"required": true,
 			"mysql": {
-				"columnName":"CreatedOn",
-				"dataType":"datetime",
-				"dataLength": null,
-				"dataScale": 0,
+				"columnName":"Title",
+				"dataType":"VARCHAR2",
+				"dataLength":256,
+				"nullable":"N"
+			}
+		},
+		"repeat": {
+			"type": "string",
+			"mysql": {
+				"columnName":"Repeat",
+				"dataType":"VARCHAR2",
+				"dataLength":16,
 				"nullable":"N"
 			}
 		}
@@ -76,11 +77,6 @@
 			"type": "belongsTo",
 			"model": "user",
 			"foreignKey": "userId"
-		},
-		"post": {
-			"type": "belongsTo",
-			"model": "post",
-			"foreignKey": "postId"
 		}
 	},
 	"acls": [],

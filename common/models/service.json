@@ -1,0 +1,59 @@
+{
+	"name": "service",
+	"options": {
+		"mysql": {
+			"table": "Services"
+		}
+	},
+	"idInjection": false,
+	"properties": {
+		"id": {
+			"type": "number",
+			"id": true,
+			"required": true,
+			"mysql": {
+				"columnName":"ServiceId",
+				"dataType":"int",
+				"dataLength": null,
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"title": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Title",
+				"dataType":"VARCHAR2",
+				"dataLength":64,
+				"nullable":"N"
+			}
+		},
+		"description": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Description",
+				"dataType":"VARCHAR2",
+				"dataLength":256,
+				"nullable":"N"
+			}
+		}
+	},
+	"validations": [],
+	"relations": {
+		"serviceProvider": {
+			"type": "hasMany",
+			"model": "serviceProvider",
+			"foreignKey": "serviceId"
+		},
+		"user": {
+			"type": "hasMany",
+			"model": "user",
+			"foreignKey": "serviceId",
+			"through": "serviceProvider"
+		}
+	},
+	"acls": [],
+	"methods": []
+}

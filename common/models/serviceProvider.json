@@ -1,29 +1,29 @@
 {
-	"name": "relation",
+	"name": "serviceProvider",
 	"options": {
 		"mysql": {
-			"table": "Relations"
+			"table": "ServiceProviders"
 		}
 	},
 	"properties": {
-		"elderlyUserId": {
+		"userId": {
 			"type": "number",
 			"id": 1,
 			"required": true,
 			"mysql": {
-				"columnName":"ElderlyUserId",
+				"columnName":"UserId",
 				"dataType":"int",
 				"dataLength": null,
 				"dataScale": 0,
 				"nullable":"N"
 			}
 		},
-		"relatedUserId": {
+		"serviceId": {
 			"type": "number",
 			"id": 2,
 			"required": true,
 			"mysql": {
-				"columnName":"RelatedUserId",
+				"columnName":"ServiceId",
 				"dataType":"int",
 				"dataLength": null,
 				"dataScale": 0,
@@ -33,15 +33,15 @@
 	},
 	"validations": [],
 	"relations": {
-		"elder_relation": {
+		"user": {
 			"type": "belongsTo",
 			"model": "user",
-			"foreignKey": "elderlyUserId"
+			"foreignKey": "userId"
 		},
-		"related_relation": {
+		"service": {
 			"type": "belongsTo",
-			"model": "user",
-			"foreignKey": "relatedUserId"
+			"model": "service",
+			"foreignKey": "serviceId"
 		}
 	},
 	"acls": [],
