@@ -67,6 +67,16 @@
 				"nullable":"N"
 			}
 		},
+		"role": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Role",
+				"dataType":"VARCHAR2",
+				"dataLength":16,
+				"nullable":"N"
+			}
+		},
 		"created": {
 			"type": "date",
 			"mysql": {
