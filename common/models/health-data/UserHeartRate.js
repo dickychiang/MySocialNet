@@ -16,7 +16,7 @@ module.exports = function(model) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
 		app.models.UserHeartRate.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
-			console.log(results);
+			//console.log(results);
 			var res = {};
 			res.date = results[0].RecordTime;
 			res.value = results[0].Value;
