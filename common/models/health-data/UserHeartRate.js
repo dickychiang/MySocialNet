@@ -2,22 +2,21 @@ var loopback = require('loopback');
 var heartrate = require(__dirname + '/../../../lib/analysis/heartrate.js');
 
 module.exports = function(model) {
-	execute = function(userId, startDate, endDate, values, cb) {
+	execute = function(userId, startDate, endDate, interval, cb) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
-		app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate+' 00:00:00', endDate+' 23:59:59']}}}, function(err, results){
-			console.log(results);
-			var avg = heartrate.CalHeartRate(results, values);
-			cb(null, results, avg);
-			
+		app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}}, function(err, results){
+			//console.log(results);
+			var res = heartrate.CalHeartRate(results, interval);
+			cb(null,  res);			
 		});
 	};
 
-	model.current = function(id, start, end, cb) {
-		execute(id, start, end, 'current', cb);
+	model.current = function(id, start, end, interval, cb) {
+		execute(id, start, end, interval, cb);
 	};
-	model.average = function(id, start, end, cb) {
-		execute(id, start, end, 'average', cb);
+	model.average = function(id, start, end, interval, cb) {
+		execute(id, start, end, interval, cb);
 	};
 	model.remoteMethod(
         'current', 
@@ -41,7 +40,8 @@ module.exports = function(model) {
         	accepts: [
         		{arg: 'id', type: 'number'},
         		{arg: 'start', type: 'string'},
-        		{arg: 'end', type: 'string'}
+        		{arg: 'end', type: 'string'},
+				{arg: 'interval', type: 'number'}
         	],
         	returns: [
         		{arg: 'data' },
