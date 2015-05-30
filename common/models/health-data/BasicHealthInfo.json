@@ -61,6 +61,25 @@
 			"foreignKey": "UserId"
 		}
 	},
-	"acls": [],
+	"acls": [
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "current"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "avreage"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
+			"property": "history"
+		}		
+	],
 	"methods": []
 }
