@@ -2,17 +2,17 @@ var loopback = require('loopback');
 var heartrate = require(__dirname + '/../../../lib/analysis/heartrate.js');
 
 module.exports = function(model) {
-	execute_avg = function(userId, startDate, endDate, interval, cb) {
+	execute_hr_avg = function(userId, startDate, endDate, interval, cb) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
-		app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}}, function(err, results){
+		app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
 			//console.log(results);
-			var res = heartrate.CalHeartRate(results, interval);
+			var res = heartrate.CalHeartRate(results, startDate, endDate, interval);
 			cb(null,  res);			
 		});
 	};
 	
-	execute_current = function(userId, cb) {
+	execute_hr_current = function(userId, cb) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
 		app.models.UserHeartRate.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
@@ -25,10 +25,10 @@ module.exports = function(model) {
 	};
 
 	model.current = function(id, cb) {
-		execute_current(id, cb);
+		execute_hr_current(id, cb);
 	};
 	model.average = function(id, start, end, interval, cb) {
-		execute_avg(id, start, end, interval, cb);
+		execute_hr_avg(id, start, end, interval, cb);
 	};
 	model.remoteMethod(
         'current', 
