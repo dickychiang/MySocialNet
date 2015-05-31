@@ -7,7 +7,8 @@ module.exports = function(model) {
 		var app = ctx && ctx.get('app');
 		app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
 			//console.log(results);
-			var res = heartrate.CalHeartRate(results, startDate, endDate, interval);
+			var res = {};
+			if(results.length > 0) res = heartrate.CalHeartRate(results, startDate, endDate, interval);
 			cb(null,  res);			
 		});
 	};
@@ -18,8 +19,10 @@ module.exports = function(model) {
 		app.models.UserHeartRate.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
 			//console.log(results);
 			var res = {};
-			res.date = results[0].RecordTime;
-			res.value = results[0].Value;
+			if(results.length > 0) {
+				res.date = results[0].RecordTime;
+				res.value = results[0].Value;
+			}
 			cb(null,  res);			
 		});		
 	};

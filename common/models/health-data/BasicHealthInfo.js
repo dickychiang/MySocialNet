@@ -7,7 +7,8 @@ module.exports = function(model) {
 		var app = ctx && ctx.get('app');
 		app.models.BasicHealthInfo.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
 			//console.log(results);
-			var res = bmi.AverageBodyMessIndes(results, startDate, endDate, interval);
+			var res = {};
+			if(results.length > 0) res = bmi.AverageBodyMessIndes(results, startDate, endDate, interval);
 			cb(null,  res);			
 		});
 	};
@@ -17,7 +18,8 @@ module.exports = function(model) {
 		var app = ctx && ctx.get('app');
 		app.models.BasicHealthInfo.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
 			//console.log(results);
-			var res = bmi.CurrentBodyMessIndex(results);
+			var res = {};
+			if(results.length > 0) res = bmi.CurrentBodyMessIndex(results);
 			cb(null,  res);			
 		});		
 	};
@@ -27,7 +29,8 @@ module.exports = function(model) {
 		var app = ctx && ctx.get('app');
 		app.models.BasicHealthInfo.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
 			//console.log(results);
-			var res = bmi.ListUserBodyMessIndes(results, startDate, endDate);
+			var res = {};
+			if(results.length > 0) res = bmi.ListUserBodyMessIndes(results, startDate, endDate);
 			cb(null,  res);			
 		});		
 	};

@@ -6,8 +6,9 @@ module.exports = function(model) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
 		app.models.Walking.find({where: { UserID: userId, StartTime: {between: [startDate, endDate]}}, order: "StartTime ASC"}, function(err, results){
-			//console.log(results);
-			var res = walk.CalSteps_average(results, startDate, endDate, interval);
+			console.log(results);
+			var res = {};
+			if(results.length > 0) res = walk.CalSteps_average(results, startDate, endDate, interval);
 			cb(null,  res);			
 		});
 	};
@@ -18,8 +19,10 @@ module.exports = function(model) {
 		app.models.Walking.find({where: {UserID: userId}, order: 'EndTime DESC', limit: '1'}, function(err, results){
 			//console.log(results);
 			var res = {};
-			res.date = results[0].EndTime;
-			res.value = results[0].Steps;
+			if(results.length > 0) {
+				res.date = results[0].EndTime;
+				res.value = results[0].Steps;
+			}
 			cb(null,  res);			
 		});		
 	};
@@ -29,7 +32,8 @@ module.exports = function(model) {
 		var app = ctx && ctx.get('app');
 		app.models.Walking.find({where: { UserID: userId, StartTime: {between: [startDate, endDate]}}}, function(err, results){
 			//console.log(results);
-			var res = walk.CalSteps_total(results, startDate, endDate, interval);
+			var res = {};
+			if(results.length > 0) res = walk.CalSteps_total(results, startDate, endDate, interval);
 			cb(null,  res);			
 		});
 	};
