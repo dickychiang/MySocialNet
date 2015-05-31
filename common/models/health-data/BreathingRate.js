@@ -18,8 +18,10 @@ module.exports = function(model) {
 		app.models.BreathingRate.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
 			//console.log(results);
 			var res = {};
-			res.date = results[0].RecordTime;
-			res.value = results[0].Value;
+                        if (results.length > 0) {
+                                res.date = results[0].RecordTime;
+                                res.value = results[0].Value;
+                        }
 			cb(null,  res);			
 		});		
 	};
