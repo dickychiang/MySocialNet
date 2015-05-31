@@ -6,7 +6,7 @@ module.exports = function(model) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
 		app.models.Walking.find({where: { UserID: userId, StartTime: {between: [startDate, endDate]}}, order: "StartTime ASC"}, function(err, results){
-			console.log(results);
+			//console.log(results);
 			var res = {};
 			if(results.length > 0) res = walk.CalSteps_average(results, startDate, endDate, interval);
 			cb(null,  res);			

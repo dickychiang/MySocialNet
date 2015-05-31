@@ -8,7 +8,7 @@ module.exports = function(model) {
 		app.models.BreathingRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
 			//console.log(results);
 			var res = {};
-			if(results > 0)  res = respiratory.CalRespiratoryRate(results, startDate, endDate, interval);
+			if(results.length > 0)  res = respiratory.CalRespiratoryRate(results, startDate, endDate, interval);
 			cb(null,  res);			
 		});
 	};
