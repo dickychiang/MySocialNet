@@ -52,6 +52,86 @@
 				"dataScale": 0,
 				"nullable":"N"
 			}
+		},
+		"WeightMin": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"WeightMin",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"WeightMax": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"WeightMax",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"HeartRateMin": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"HeartRateMin",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"HeartRateMax": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"HeartRateMax",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"BreathingRateMin": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"BreathingRateMin",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"BreathingRateMax": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"BreathingRateMax",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"StepsMin": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"StepsMin",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
+		},
+		"StepsMax": {
+			"type": "number",
+			"required": true,
+			"mysql": {
+				"columnName":"StepsMax",
+				"dataType":"double",
+				"dataScale": 0,
+				"nullable":"N"
+			}
 		}
 	},
 	"validations": [],
