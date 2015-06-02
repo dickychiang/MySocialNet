@@ -87,7 +87,7 @@
 			"model": "user",
 			"foreignKey": "ownerId"
 		},
-		"fromUserId": {
+		"sender": {
 			"type": "belongsTo",
 			"model": "user",
 			"foreignKey": "fromUserId"
