@@ -17,18 +17,41 @@ module.exports = function(model) {
     			return;
     		}
     		
-    		model.create({
-				"ownerId": toUserId,
-				"fromUserId": user.id,
-				"toUserId": toUserId,
-				"content": content
-			}, function(err) {
-				if (err) {
-					cb(err);
-					return;
-				}
+    		if (toUserId != user.id) {    		
+				model.create({
+					"ownerId": toUserId,
+					"fromUserId": user.id,
+					"toUserId": toUserId,
+					"content": content
+				}, function(err) {
+					if (err) {
+						cb(err);
+						return;
+					}
+					model.findById(result.id, cb);
+				});
+			} else {
 				model.findById(result.id, cb);
-			});
+			}
+    	});
+	};
+	
+	model.get = function(filter, callback) {
+		var ctx = loopback.getCurrentContext();
+		var app = ctx && ctx.get('app');
+    	var user = ctx && ctx.get('user');
+
+    	if (!filter) {
+    		filter = {};
+    	}
+    	if (!filter.where) {
+    		filter.where = {ownerId: user.id};
+    	} else {
+    		filter.where = {and: [{ownerId: user.id}, filter.where]};
+    	}
+    	app.models.message.find(filter, function(err, results) {
+    		console.log(results);
+    		callback(null, results);
     	});
 	};
 	
@@ -42,6 +65,16 @@ module.exports = function(model) {
         	returns: {arg: 'message', type: 'object'},
         	http: {path: '/add', verb: 'post'},
         	description: "Send a message to a particular user"
+        }
+    );
+    
+    model.remoteMethod(
+        'get', 
+        {
+        	accepts: {arg: 'filter', type: 'object'},
+        	returns: {type: 'object', root: true},
+        	http: {path: '/', verb: 'get'},
+        	description: "Get messages in a particular user inbox"
         }
     );
 };
