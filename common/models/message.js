@@ -50,7 +50,6 @@ module.exports = function(model) {
     		filter.where = {and: [{ownerId: user.id}, filter.where]};
     	}
     	app.models.message.find(filter, function(err, results) {
-    		console.log(results);
     		callback(null, results);
     	});
 	};

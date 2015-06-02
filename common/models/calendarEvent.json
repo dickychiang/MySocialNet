@@ -2,14 +2,14 @@
 	"name": "calendarEvent",
 	"options": {
 		"mysql": {
-			"table": "CalendarEvent"
+			"table": "CalendarEvents"
 		}
 	},
+	"idInjection": false,
 	"properties": {
 		"id": {
 			"type": "number",
 			"id": true,
-			"required": true,
 			"mysql": {
 				"columnName":"CalendarEventId",
 				"dataType":"int",
@@ -67,6 +67,16 @@
 				"columnName":"Repeat",
 				"dataType":"VARCHAR2",
 				"dataLength":16,
+				"nullable":"N"
+			}
+		},
+		"end": {
+			"type": "date",
+			"mysql": {
+				"columnName":"End",
+				"dataType":"datetime",
+				"dataLength": null,
+				"dataScale": 0,
 				"nullable":"N"
 			}
 		}
