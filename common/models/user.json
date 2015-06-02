@@ -77,6 +77,26 @@
 				"nullable":"N"
 			}
 		},
+		"address": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Address",
+				"dataType":"VARCHAR2",
+				"dataLength":512,
+				"nullable":"N"
+			}
+		},
+		"phone": {
+			"type": "string",
+			"required": true,
+			"mysql": {
+				"columnName":"Phone",
+				"dataType":"VARCHAR2",
+				"dataLength":32,
+				"nullable":"N"
+			}
+		},
 		"created": {
 			"type": "date",
 			"mysql": {
