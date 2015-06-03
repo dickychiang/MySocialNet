@@ -159,7 +159,7 @@ module.exports = function (model) {
         		{arg: 'start', type: 'string'},
         		{arg: 'end', type: 'string'}
         	],
-        	returns: { type: 'object', root: true },
+        	returns: { type: 'array', root: true },
         	http: {path: '/get', verb: 'get'}
         }
     );

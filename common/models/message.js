@@ -71,7 +71,7 @@ module.exports = function(model) {
         'get', 
         {
         	accepts: {arg: 'filter', type: 'object'},
-        	returns: {type: 'object', root: true},
+        	returns: {type: 'array', root: true},
         	http: {path: '/', verb: 'get'},
         	description: "Get messages in a particular user inbox"
         }
