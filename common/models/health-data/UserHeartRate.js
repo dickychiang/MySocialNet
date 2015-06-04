@@ -1,29 +1,127 @@
 var loopback = require('loopback');
 var heartrate = require(__dirname + '/../../../lib/analysis/heartrate.js');
+var async = require("async");
 
 module.exports = function(model) {
 	execute_hr_avg = function(userId, startDate, endDate, interval, cb) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
-		app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
-			//console.log(results);
-			var res = {};
-			if(results.length > 0) res = heartrate.CalHeartRate(results, startDate, endDate, interval);
-			cb(null,  res);			
-		});
+		async.series([
+		function(callback) {
+			app.models.UserBasicInfo.find({where: {UserID: userId}}, function(err, results) {
+				//console.log(results);
+				if(err) {
+					callback(err);
+					return;
+				} else {
+					var thresholds = [];
+					if(results.length > 0) {										
+						thresholds[0] = results[0].HeartRateMin;
+						thresholds[1] = results[0].HeartRateMax;
+						callback(null, thresholds);
+					} else {
+						thresholds = null;
+						callback(null, thresholds);
+					}
+				}
+			});
+		},
+		function(callback) {
+			app.models.UserHeartRate.find({where: { UserId: userId, RecordTime: {between: [startDate, endDate]}}, order: "RecordTime ASC"}, function(err, results){
+				//console.log(results);
+				if(err) {
+					callback(err);
+					return;
+				} else {
+					var res; 
+					if(results.length > 0) {
+						res = heartrate.CalHeartRate(results, startDate, endDate, interval);
+						callback(null, res);
+					} else {
+						res = null;
+						callback(null, res);
+					}
+				}
+			});
+		}
+		], function(err, res) {
+			if(err) {
+				var alert = null; //db error
+				cb(null,alert);
+			} else if(res[0] == null || res[1] == null){
+				cb(null,null);				
+			}
+			else {
+				var len = res[1].length;
+				for(var i = 0; i < len; i++) {
+				if(res[1][i].avg >= res[0][0] && res[1][i].avg <= res[0][1]) {
+					res[1][i].status = "OK";
+				} else {
+					res[1][i].status = "Warning";
+				}
+			  }
+				cb(null,  res[1]);
+		  }			
+	  });
 	};
 	
 	execute_hr_current = function(userId, cb) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
-		app.models.UserHeartRate.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
-			//console.log(results);
-			var res = {};
-			if(results.length > 0) {
-				res.date = results[0].RecordTime;
-				res.value = results[0].Value;
+		async.series([
+		function(callback) {
+			app.models.UserBasicInfo.find({where: {UserID: userId}}, function(err, results) {
+				//console.log(results);
+				if(err) {
+					callback(err);
+					return;
+				} else {
+					var thresholds = [];		
+					if(results.length > 0) {				
+						thresholds[0] = results[0].HeartRateMin;
+						thresholds[1] = results[0].HeartRateMax;
+						callback(null, thresholds);
+					} else {
+						thresholds = null;
+						callback(null,thresholds);
+					}
+				}
+			});	
+		},
+		function(callback) {
+			app.models.UserHeartRate.find({where: {UserId: userId}, order: 'RecordTime DESC', limit: '1'}, function(err, results){
+				//console.log(results);
+				if(err) {
+					callback(err);
+					return;
+				} else { 
+					var res =[];
+					if(results.length > 0) {						
+						res.push({"date": results[0].RecordTime,"value": results[0].Value});
+						callback(null, res);
+					} else {
+						res = null;
+						callback(null, res);
+					}						
+				}	
+			});
+		}
+		],function(err, res) {
+			if(err) {
+				var alert = null; //db error
+				cb(null,alert);
 			}
-			cb(null,  res);			
+			else if(res[0] == null || res[1] == null) {
+				cb(null,null);
+			} 
+			else {
+				if(res[1][0].value >= res[0][0] && res[1][0].value <= res[0][1]) {
+					res[1][0].status = "OK";
+				} else {
+					res[1][0].status = "Warning";
+				}
+				cb(null,  res[1]);
+			}
 		});		
 	};
 
