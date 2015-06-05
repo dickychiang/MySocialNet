@@ -75,7 +75,7 @@ module.exports = function(model) {
 		async.series([
 		function(callback) {
 			app.models.UserBasicInfo.find({where: {UserID: userId}}, function(err, results) {
-				console.log(results);
+				//console.log(results);
 				if(err) {
 					callback(err);
 					return;
@@ -94,7 +94,7 @@ module.exports = function(model) {
 		},
 		function(callback) {
 			app.models.Walking.find({where: {UserID: userId}, order: 'EndTime DESC', limit: '1'}, function(err, results){
-				console.log(results);
+				//console.log(results);
 				if(err) {
 					callback(err);
 					return;
@@ -138,7 +138,7 @@ module.exports = function(model) {
 		async.series([
 		function(callback) {
 			app.models.UserBasicInfo.find({where: {UserID: userId}}, function(err, results) {
-				console.log(results);
+				//console.log(results);
 				if(err) {
 					callback(err);
 					return;
