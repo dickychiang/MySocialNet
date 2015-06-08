@@ -1,5 +1,6 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
+var fs = require('fs');
 
 var app = module.exports = loopback();
 var onlineUserIds = {};
@@ -32,7 +33,25 @@ app.use(loopback.favicon());
 app.use(loopback.compress());
 
 boot(app, __dirname);
-app.use('/sample', loopback.static(__dirname + '/../client'))
+app.post('/avatar', function(req, res, next){
+	req.form.complete(function(err, fields, files){
+		if (err || !req.accessToken || !req.files.avatar) {
+			next(err);
+		} else {
+			var ctx = loopback.getCurrentContext();
+			var user = ctx && ctx.get('user');
+			fs.readFile(req.files.avatar.path, function (err, data) {
+			  var newPath = __dirname + '/avatar/' + user.id +  + '.png';
+				fs.writeFile(newPath, data, function (err) {
+					res.redirect("back");
+				});
+			});
+		}
+	});
+});
+
+app.use('/sample', loopback.static(__dirname + '/../client'));
+app.use('/avatar', loopback.static(__dirname + '/avatar'));
 app.use(loopback.urlNotFound());
 app.use(loopback.errorHandler());
 
