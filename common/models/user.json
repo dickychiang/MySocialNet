@@ -158,6 +158,12 @@
 			"principalType": "ROLE",
 			"principalId": "$authenticated",
 			"permission": "ALLOW",
+			"property": "findById"
+		},
+		{
+			"principalType": "ROLE",
+			"principalId": "$authenticated",
+			"permission": "ALLOW",
 			"property": "friends"
 		},
 		{
