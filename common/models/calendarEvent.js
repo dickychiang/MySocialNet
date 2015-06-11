@@ -15,11 +15,13 @@ module.exports = function (model) {
 		var user = ctx && ctx.get('user');
 		
 		start = nlib.date.parse(start, 'yyyy-mm-dd');
+		var localStart = nlib.date.toLocal(start);
 		
 		end = nlib.date.parse(end, 'yyyy-mm-dd');
 		end = nlib.date.stringify(end, 'yyyy-mm-dd');
 		end += 'T23:59:59.999Z';
 		end = nlib.date.parse(end, 'yyyy-mm-ddthh:mm:ss.fff');
+		var localEnd = nlib.date.toLocal(end);
 		
 		var filter = {
 			"where": {
@@ -60,8 +62,8 @@ module.exports = function (model) {
 				case 'daily':
 				case 'weekly':
 					while ((!calendarEvent.end || calendarEvent.time <= calendarEvent.end) && 
-					calendarEvent.time <= end) {
-						if (calendarEvent.time >= start) {
+					calendarEvent.time <= localEnd) {
+						if (calendarEvent.time >= localStart) {
 							events.push(calendarEvent);
 						}
 						
