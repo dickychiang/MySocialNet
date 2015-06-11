@@ -78,13 +78,16 @@ module.exports = function (model) {
 	model.friends = function(callback) {
 		var ctx = loopback.getCurrentContext();
 		var app = ctx && ctx.get('app');
+		var user = ctx && ctx.get('user');
 		model.friendIds(function(err, userIds) {
 			var tasks = [];
 			
 			nlib.forEach(userIds, function(userId) {
-				tasks.push(function(callback){
-					app.models.user.findById(userId, callback);
-				});
+				if (user.id != userId) {
+					tasks.push(function(callback){
+						app.models.user.findById(userId, callback);
+					});
+				}
 			});
 			
 			async.parallel(tasks, callback);

@@ -50,8 +50,9 @@ app.post('/avatar', function(req, res, next){
 	});
 });
 
-app.use('/sample', loopback.static(__dirname + '/../client'));
+
 app.use('/avatar', loopback.static(__dirname + '/avatar'));
+app.use('/', loopback.static(__dirname + '/../client'));
 app.use(loopback.urlNotFound());
 app.use(loopback.errorHandler());
 
@@ -66,21 +67,53 @@ app.start = function() {
 // start the server if `$ node server.js`
 if (require.main === module) {
 	app.io = require('socket.io')(app.start());
-	app.io.on('connection', function(socket){
+	app.io.sockets.on('connection', function(socket){
 		socket.on('online', function(accessToken){
 			this.accessToken = accessToken;
 			onlineUserIds[accessToken.userId] = 1;
 			app.io.emit('online');
+			socket.join('all');
 		});
+		
 		socket.on('message', function(message) {
 			socket.broadcast.emit('message', message);
 		});
-	    socket.on('chat', function(message) {
+		
+		socket.on('chat', function(message) {
 			socket.broadcast.emit('chat', message);
 		});
-		socket.on('call', function(message) {
-			socket.broadcast.emit('call', message);
+		
+		socket.on('create or join', function(room) {
+			console.log(app.io.sockets);
+			var numClients = app.io.sockets.clients(room).length;
+			if (numClients === 0) {
+				socket.join(room);
+				socket.emit('created', room);
+			} else if (numClients == 1) {
+				app.io.sockets. in (room).emit('join', room);
+				socket.join(room);
+				socket.emit('joined', room);
+			} else {
+				socket.emit('full', room);
+			}
+			socket.emit('emit(): client ' + socket.id + ' joined room ' + room);
+			socket.broadcast.emit('broadcast(): client ' + socket.id + ' joined room ' + room);
 		});
+
+		socket.on('call', function(offer) {
+			// from: userId
+			// to: userId
+			if (this.accessToken && this.accessToken.userId == offer.from) {
+				for (var key in app.io.connected) {
+					var conn = app.io.connected[key];
+					if (conn.accessToken && offer.to == conn.accessToken.userId) {
+						console.log(conn);
+						break;
+					}
+				}
+			}
+		});
+
 		socket.on('disconnect', function(){
 			if (this.accessToken) {
 				delete onlineUserIds[this.accessToken.userId];
