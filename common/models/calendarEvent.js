@@ -15,8 +15,8 @@ module.exports = function (model) {
 		var user = ctx && ctx.get('user');
 		
 		start = nlib.date.parse(start, 'yyyy-mm-dd');
-		end = nlib.date.parse(end, 'yyyy-mm-dd');
 		
+		end = nlib.date.parse(end, 'yyyy-mm-dd');
 		end = nlib.date.stringify(end, 'yyyy-mm-dd');
 		end += 't23:59:59.999';
 		end = nlib.date.parse(end, 'yyyy-mm-ddthh:mm:ss.fff');
@@ -29,7 +29,7 @@ module.exports = function (model) {
 					},
 					{
 						"time": {
-							"lte": end
+							"lte": nlib.date.stringify(end, 'yyyy-mm-ddthh:mm:ss.fffz')
 						}
 					},
 					{
@@ -39,7 +39,7 @@ module.exports = function (model) {
 							},
 							{
 								"end": {
-									"gte": start
+									"gte": nlib.date.stringify(start, 'yyyy-mm-ddthh:mm:ss.fffz')
 								}
 							}
 						]
@@ -65,18 +65,12 @@ module.exports = function (model) {
 							events.push(calendarEvent);
 						}
 						
-						calendarEvent.time = nlib.date.stringify(calendarEvent.time, 'yyyy-mm-ddthh:mm:ss.fff');
-						if (calendarEvent.end) {
-							calendarEvent.end = nlib.date.stringify(calendarEvent.end, 'yyyy-mm-ddthh:mm:ss.fff');
-						}
-						
+						calendarEvent.time = new Date(calendarEvent.time);
 						calendarEvent = JSON.parse(JSON.stringify(calendarEvent));
-
-						calendarEvent.time = nlib.date.parse(calendarEvent.time, 'yyyy-mm-ddthh:mm:ss.fff');
+						calendarEvent.time = new Date(calendarEvent.time);
 						if (calendarEvent.end) {
-							calendarEvent.end = nlib.date.parse(calendarEvent.end, 'yyyy-mm-ddthh:mm:ss.fff');
+							calendarEvent.end = new Date(calendarEvent.end);
 						}
-						
 						calendarEvent.time.setHours(
 							calendarEvent.time.getHours() +
 							hours[calendarEvent.repeat]
