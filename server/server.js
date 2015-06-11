@@ -53,7 +53,7 @@ app.post('/avatar', function(req, res, next){
 
 app.use('/avatar', loopback.static(__dirname + '/avatar'));
 //app.use('/', loopback.static(__dirname + '/../client'));
-app.use('/sample', loopback.static(__dirname + '/../client', { setHeaders : function (res, path) {
+app.use('/', loopback.static(__dirname + '/../client', { setHeaders : function (res, path) {
 	res.setHeader('Access-Control-Allow-Origin', 'https://computeengineondemand.appspot.com');
 }}));
 app.use(loopback.urlNotFound());
