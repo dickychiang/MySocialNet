@@ -65,11 +65,18 @@ module.exports = function (model) {
 							events.push(calendarEvent);
 						}
 						
-						calendarEvent = JSON.parse(JSON.stringify(calendarEvent));
-						calendarEvent.time = new Date(calendarEvent.time);
+						calendarEvent.time = nlib.date.stringify(calendarEvent.time, 'yyyy-mm-ddthh:mm:ss.fff');
 						if (calendarEvent.end) {
-							calendarEvent.end = new Date(calendarEvent.end);
+							calendarEvent.end = nlib.date.stringify(calendarEvent.end, 'yyyy-mm-ddthh:mm:ss.fff');
 						}
+						
+						calendarEvent = JSON.parse(JSON.stringify(calendarEvent));
+
+						calendarEvent.time = nlib.date.parse(calendarEvent.time, 'yyyy-mm-ddthh:mm:ss.fff');
+						if (calendarEvent.end) {
+							calendarEvent.end = nlib.date.parse(calendarEvent.end, 'yyyy-mm-ddthh:mm:ss.fff');
+						}
+						
 						calendarEvent.time.setHours(
 							calendarEvent.time.getHours() +
 							hours[calendarEvent.repeat]
