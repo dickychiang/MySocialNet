@@ -29,7 +29,7 @@ module.exports = function (model) {
 					},
 					{
 						"time": {
-							"lte": end
+							"lte": nlib.date.stringify(end, 'yyyy-mm-ddthh:mm:ss.fffz')
 						}
 					},
 					{
@@ -39,7 +39,7 @@ module.exports = function (model) {
 							},
 							{
 								"end": {
-									"gte": start
+									"gte": nlib.date.stringify(start, 'yyyy-mm-ddthh:mm:ss.fffz')
 								}
 							}
 						]
@@ -65,22 +65,27 @@ module.exports = function (model) {
 							events.push(calendarEvent);
 						}
 						
-						calendarEvent.time = nlib.date.stringify(calendarEvent.time , 'yyyy-mm-ddthh:mm:ss.fffz');
+						calendarEvent.time = calendarEvent.time.getTime();
 						if (calendarEvent.end) {
-							calendarEvent.end = nlib.date.stringify(calendarEvent.end , 'yyyy-mm-ddthh:mm:ss.fffz');
+							calendarEvent.end = calendarEvent.end.getTime();
+						}
+						
+						var ce = JSON.parse(JSON.stringify(calendarEvent));
+						
+						calendarEvent.time = new Date(calendarEvent.time);
+						if (calendarEvent.end) {
+							calendarEvent.end = new Date(calendarEvent.end);
+						}
+						ce.time = new Date(calendarEvent.time);
+						if (ce.end) {
+							ce.end = new Date(ce.end);
 						}
 
-						calendarEvent = JSON.parse(JSON.stringify(calendarEvent));
-						
-						calendarEvent.time = nlib.date.parse(calendarEvent.time , 'yyyy-mm-ddthh:mm:ss.fffz');
-						if (calendarEvent.end) {
-							calendarEvent.end = nlib.date.parse(calendarEvent.end , 'yyyy-mm-ddthh:mm:ss.fffz');
-						}
-						
-						calendarEvent.time.setHours(
-							calendarEvent.time.getHours() +
+						ce.time.setHours(
+							ce.time.getHours() +
 							hours[calendarEvent.repeat]
 						);
+						calendarEvent = ce;
 					}
 					break;
 				case 'none':
