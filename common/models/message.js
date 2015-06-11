@@ -4,6 +4,7 @@ module.exports = function(model) {
 
 	model.add = function(toUserId, content, cb) {
 		var ctx = loopback.getCurrentContext();
+		var app = ctx && ctx.get('app');
     	var user = ctx && ctx.get('user');
     	
     	model.create({
@@ -15,6 +16,10 @@ module.exports = function(model) {
     		if (err) {
     			cb(err);
     			return;
+    		}
+    		
+    		if (app && app.io && app.io.emit) {
+    			app.io.emit('message', { toUserId: toUserId });
     		}
     		
     		if (toUserId != user.id) {    		
